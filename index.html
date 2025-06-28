@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Galería Dorada - LD</title>
-  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <style>
     :root {
       --bg: url('https://pbs.twimg.com/media/GEJj58VXoAAKIrZ?format=jpg&name=4096x4096');
@@ -19,7 +19,7 @@
       background-attachment: fixed;
       color: white;
       backdrop-filter: brightness(0.6) blur(2px);
-      padding-top: 60px; /* espacio para navbar */
+      padding-top: 60px;
     }
 
     /* 🌟 NAVBAR */
@@ -115,7 +115,6 @@
     .swiper {
       width: 95%;
       max-width: 900px;
-      height: auto;
       margin: 20px auto;
       z-index: 1;
     }
@@ -136,6 +135,7 @@
       object-fit: contain;
       background: #000;
       border-radius: 10px;
+      cursor: zoom-in;
     }
 
     .nombre-imagen {
@@ -143,6 +143,7 @@
       font-size: 16px;
       color: #ffe99e;
       text-shadow: 0 0 5px #000;
+      text-align: center;
     }
 
     @media (max-width: 600px) {
@@ -158,6 +159,36 @@
         font-size: 16px;
       }
     }
+
+    /* MODAL */
+    #modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      cursor: zoom-out;
+    }
+
+    #modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #fff;
+    }
+
+    #cerrar {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -166,9 +197,7 @@
   <nav class="navbar">
     <div class="logo">LD Dorados</div>
     <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </div>
     <ul id="nav-links">
       <li><a href="#">Inicio</a></li>
@@ -181,18 +210,24 @@
   <h1>✨ Galería Dorada - LD ✨</h1>
   <input type="text" id="buscador" placeholder="🔍 Buscar imagen por nombre...">
 
+  <!-- 📸 Carrusel -->
   <div class="swiper">
-    <div class="swiper-wrapper" id="galeria">
-      <!-- Se insertan dinámicamente -->
-    </div>
+    <div class="swiper-wrapper" id="galeria"></div>
     <div class="swiper-button-next"></div>
     <div class="swiper-button-prev"></div>
     <div class="swiper-pagination"></div>
   </div>
 
+  <!-- 🔍 Modal imagen grande -->
+  <div id="modal" onclick="cerrarModal()">
+    <span id="cerrar">&times;</span>
+    <img id="imgAmpliada" src="" alt="">
+  </div>
+
+  <!-- JS -->
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbx7K__lUrvtKYT38q_4ax9LmFR-gYldkgP5VpEZKJtPUq2w9_0NU9nOVW39e9FNRAcwyA/exec"; // ⚠️ reemplazá por tu link real
+    const API_URL = "https://script.google.com/macros/s/AKfycbx7K__lUrvtKYT38q_4ax9LmFR-gYldkgP5VpEZKJtPUq2w9_0NU9nOVW39e9FNRAcwyA/exec"; // Reemplazá por tu endpoint real
 
     let todasLasImagenes = [];
     let swiper;
@@ -205,7 +240,7 @@
         const slide = document.createElement("div");
         slide.className = "swiper-slide";
         slide.innerHTML = `
-          <img src="${img.url}" alt="${img.name}">
+          <img src="${img.url}" alt="${img.name}" onclick="abrirModal('${img.url}')">
           <div class="nombre-imagen">${img.name}</div>
         `;
         galeria.appendChild(slide);
@@ -239,6 +274,15 @@
 
     function toggleMenu() {
       document.getElementById("nav-links").classList.toggle("active");
+    }
+
+    function abrirModal(url) {
+      document.getElementById("imgAmpliada").src = url;
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function cerrarModal() {
+      document.getElementById("modal").style.display = "none";
     }
   </script>
 </body>
