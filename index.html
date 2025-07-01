@@ -8,6 +8,11 @@
   <style>
     :root {
       --bg: url('https://pbs.twimg.com/media/GEJj58VXoAAKIrZ?format=jpg&name=4096x4096');
+      --gold: #ffd700;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -22,25 +27,24 @@
       padding-top: 60px;
     }
 
-    /* 🌟 NAVBAR */
     .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: fixed;
       top: 0;
-      width: 100%;
+      left: 0;
+      right: 0;
       background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(5px);
       padding: 10px 20px;
-      color: #fff;
-      z-index: 10;
+      z-index: 1000;
     }
 
     .navbar .logo {
       font-weight: bold;
-      font-size: 1.3em;
-      color: #ffd700;
+      font-size: 1.5em;
+      color: var(--gold);
     }
 
     .navbar ul {
@@ -54,6 +58,7 @@
     .navbar li a {
       color: #fff;
       text-decoration: none;
+      font-weight: bold;
     }
 
     .menu-toggle {
@@ -73,11 +78,12 @@
       .navbar ul {
         display: none;
         flex-direction: column;
-        background: rgba(0, 0, 0, 0.9);
-        width: 100%;
+        background: rgba(0, 0, 0, 0.95);
         position: absolute;
         top: 60px;
         left: 0;
+        width: 100%;
+        padding: 20px 0;
         text-align: center;
       }
 
@@ -90,12 +96,20 @@
       }
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
-      margin: 20px 10px;
-      font-size: 2.5em;
-      color: #ffda6d;
+      color: var(--gold);
       text-shadow: 0 0 10px #000;
+    }
+
+    h1 {
+      font-size: 2.4em;
+      margin-top: 20px;
+    }
+
+    h2 {
+      font-size: 1.8em;
+      margin-top: 40px;
     }
 
     input[type="text"] {
@@ -146,89 +160,75 @@
       text-align: center;
     }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.7em;
-      }
-
-      .swiper-slide img {
-        max-height: 300px;
-      }
-
-      input[type="text"] {
-        font-size: 16px;
-      }
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: var(--gold);
+      text-shadow: 0 0 5px black;
     }
 
-    /* MODAL */
-    #modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.9);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      cursor: zoom-out;
+    .iframe-wrapper {
+      width: 95%;
+      max-width: 1000px;
+      margin: 20px auto;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid var(--gold);
+      border-radius: 15px;
+      padding: 10px;
+      box-shadow: 0 0 15px #000;
     }
 
-    #modal img {
-      max-width: 90%;
-      max-height: 90%;
+    .iframe-wrapper iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
       border-radius: 10px;
-      box-shadow: 0 0 20px #fff;
-    }
-
-    #cerrar {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
-      color: #fff;
-      cursor: pointer;
-      font-weight: bold;
+      background: white;
     }
   </style>
 </head>
 <body>
-
-  <!-- ⭐ NAVBAR -->
   <nav class="navbar">
     <div class="logo">LD Dorados</div>
     <div class="menu-toggle" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
     <ul id="nav-links">
-      <li><a href="#">Inicio</a></li>
-      <li><a href="#">Eventos</a></li>
-      <li><a href="#">Personajes</a></li>
-      <li><a href="#">Contacto</a></li>
+      <li><a href="#infocards">InfoCards</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#progresos">Progresos</a></li>
     </ul>
   </nav>
 
   <h1>✨ Galería Dorada - LD ✨</h1>
-  <input type="text" id="buscador" placeholder="🔍 Buscar imagen por nombre...">
 
-  <!-- 📸 Carrusel -->
-  <div class="swiper">
-    <div class="swiper-wrapper" id="galeria"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-pagination"></div>
-  </div>
+  <section id="infocards">
+    <h2>🃏 InfoCards</h2>
+    <input type="text" id="buscador" placeholder="🔍 Buscar imagen por nombre...">
+    <div class="swiper">
+      <div class="swiper-wrapper" id="galeria"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </section>
 
-  <!-- 🔍 Modal imagen grande -->
-  <div id="modal" onclick="cerrarModal()">
-    <span id="cerrar">&times;</span>
-    <img id="imgAmpliada" src="" alt="">
-  </div>
+  <section id="performance">
+    <h2>📋 Tabla de Performance</h2>
+    <div class="iframe-wrapper">
+      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubhtml?gid=0&single=true&range=C2:Q120"></iframe>
+    </div>
+  </section>
 
-  <!-- JS -->
+  <section id="progresos">
+    <h2>📈 Progresos</h2>
+    <div class="iframe-wrapper">
+      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubchart?oid=758906036&amp;format=interactive"></iframe>
+    </div>
+  </section>
+
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyq0mHMv432ksgyO9s63ktnuKZxbMlvfmulK7IH89wv-06DYgN8O5Wy_mT8tB8aYlBicg/exec"; // Reemplazá por tu endpoint real
-
+    const API_URL = "https://script.google.com/macros/s/AKfycbyq0mHMv432ksgyO9s63ktnuKZxbMlvfmulK7IH89wv-06DYgN8O5Wy_mT8tB8aYlBicg/exec";
     let todasLasImagenes = [];
     let swiper;
 
@@ -236,11 +236,11 @@
       const galeria = document.getElementById("galeria");
       galeria.innerHTML = "";
 
-      imagenes.forEach(img => {
+      imagenes.forEach((img) => {
         const slide = document.createElement("div");
         slide.className = "swiper-slide";
         slide.innerHTML = `
-          <img src="${img.url}" alt="${img.name}" onclick="abrirModal('${img.url}')">
+          <img src="${img.url}" alt="${img.name}">
           <div class="nombre-imagen">${img.name}</div>
         `;
         galeria.appendChild(slide);
@@ -274,15 +274,6 @@
 
     function toggleMenu() {
       document.getElementById("nav-links").classList.toggle("active");
-    }
-
-    function abrirModal(url) {
-      document.getElementById("imgAmpliada").src = url;
-      document.getElementById("modal").style.display = "flex";
-    }
-
-    function cerrarModal() {
-      document.getElementById("modal").style.display = "none";
     }
   </script>
 </body>
