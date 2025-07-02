@@ -188,7 +188,7 @@
     .iframe-wrapper {
       width: 95%;
       max-width: 1000px;
-      margin: 20px auto;
+      margin: 0 auto 20px auto;
       background: rgba(0, 0, 0, 0.6);
       border: 2px solid var(--gold);
       border-radius: 15px;
@@ -202,6 +202,32 @@
       border: none;
       border-radius: 10px;
       background: white;
+    }
+
+    details summary {
+      cursor: pointer;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid var(--gold);
+      border-radius: 10px;
+      margin: 20px auto;
+      width: 95%;
+      max-width: 1000px;
+      box-shadow: 0 0 10px #000;
+      list-style: none;
+    }
+
+    details summary h2 {
+      margin: 0;
+      color: var(--gold);
+      text-shadow: 0 0 10px #000;
+      font-size: 1.6em;
+      text-align: center;
+    }
+
+    details[open] summary {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
   </style>
 </head>
@@ -234,17 +260,21 @@
   </section>
 
   <section id="performance">
-    <h2>📋 Tabla de Performance</h2>
-    <div class="iframe-wrapper">
-      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubhtml?gid=0&single=true&range=C2:Q120"></iframe>
-    </div>
+    <details>
+      <summary><h2>📋 Tabla de Performance</h2></summary>
+      <div class="iframe-wrapper">
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubhtml?gid=0&single=true&range=C2:Q120"></iframe>
+      </div>
+    </details>
   </section>
 
   <section id="progresos">
-    <h2>📈 Progresos</h2>
-    <div class="iframe-wrapper">
-      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubchart?oid=758906036&amp;format=interactive"></iframe>
-    </div>
+    <details>
+      <summary><h2>📈 Progresos</h2></summary>
+      <div class="iframe-wrapper">
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubchart?oid=758906036&amp;format=interactive"></iframe>
+      </div>
+    </details>
   </section>
 
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
@@ -299,4 +329,3 @@
   </script>
 </body>
 </html>
-
