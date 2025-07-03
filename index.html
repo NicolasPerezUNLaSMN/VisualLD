@@ -105,7 +105,7 @@
       display: block;
     }
 
-    .dropdown.open .submenu {
+    .dropdown.open > .submenu {
       display: block;
     }
 
@@ -137,6 +137,12 @@
         background: none;
         padding: 0;
         text-align: center;
+        display: none;
+      }
+
+      .dropdown.open .submenu {
+        display: flex;
+        flex-direction: column;
       }
 
       .submenu li {
@@ -170,25 +176,35 @@
       <span></span><span></span><span></span>
     </div>
     <ul id="nav-links">
-        <li class="dropdown" onclick="toggleDropdown(this)">
-        <a href="#">Guías ▼</a>
+      <li><a href="#infocards">InfoCards</a></li>
+      <li><a href="#performance">Performance</a></li>
+      <li><a href="#progresos">Progresos</a></li>
+      <li class="dropdown">
+        <a href="#" onclick="event.preventDefault(); toggleDropdown(this.parentElement)">Guías ▼</a>
         <ul class="submenu">
-          <li><a href="https://drive.google.com/file/d/1WsgngnYaEzTJ_xOM5vYTRLCXCETFJn8_/view?usp=sharing">Reliquias</a></li>
+          <li><a href="#reliquias">Reliquias</a></li>
           <li><a href="https://docs.google.com/document/d/1TbEQYsLfyRu6AFbjtgf-nt8ofjdNfiqCBZ8h85n2BGY/edit?tab=t.0">Guerra Santa</a></li>
           <li><a href="#pesca">Pesca</a></li>
           <li><a href="#guerra-tronos">Guerra de Tronos</a></li>
         </ul>
       </li>
-      <li><a href="#infocards">InfoCards</a></li>
-      <li><a href="#performance">Performance</a></li>
-      <li><a href="#progresos">Progresos</a></li>
-    
       <li class="discord-button"><a href="https://discord.gg/saint-seiya-legend-of-justice-632121507455303680" target="_blank">Discord SSLOF</a></li>
       <li class="discord-button"><a href="https://discord.gg/RkYBw79P" target="_blank">Discord Jarz</a></li>
     </ul>
   </nav>
 
-  <!-- Acá seguiría tu contenido de la galía, carruseles, iframes, etc. -->
+  <section id="infocards">
+    <h2>🃏 InfoCards</h2>
+    <p>Contenido de InfoCards...</p>
+  </section>
+  <section id="performance">
+    <h2>📊 Performance</h2>
+    <p>Contenido de Performance...</p>
+  </section>
+  <section id="progresos">
+    <h2>📈 Progresos</h2>
+    <p>Contenido de Progresos...</p>
+  </section>
 
   <script>
     function toggleMenu() {
@@ -201,4 +217,3 @@
   </script>
 </body>
 </html>
-
