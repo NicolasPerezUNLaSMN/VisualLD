@@ -260,41 +260,48 @@
   </style>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="logo">LD Dorados</div>
-    <div class="menu-toggle" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
-    <ul id="nav-links">
-      <li><a href="#infocards">InfoCards</a></li>
-      <li><a href="#video">Video Oficial</a></li>
-      <li><a href="#progresos">Progresos semanales</a></li>
-      <li><a href="https://drive.google.com/file/d/1WsgngnYaEzTJ_xOM5vYTRLCXCETFJn8_/view?usp=sharing" target="_blank">Guía Reliquias</a></li>
-      <li><a href="https://docs.google.com/document/d/1TbEQYsLfyRu6AFbjtgf-nt8ofjdNfiqCBZ8h85n2BGY/edit?tab=t.0" target="_blank">Guía Guerra Santa</a></li>
-      <li class="discord-button"><a href="https://discord.gg/saint-seiya-legend-of-justice-632121507455303680" target="_blank">Discord SSLOF</a></li>
-      <li class="discord-button"><a href="https://discord.gg/RkYBw79P" target="_blank">Discord Jarz</a></li>
-    </ul>
-  </nav>
-
+  <nav class="navbar"> ... </nav>
   <h1>✨ Galería Dorada - LD ✨</h1>
+  <p style="text-align: center;"> 👀 Visitas: <span id="contador-visitas">...</span></p>
 
-  <p style="text-align: center;">
-    👀 Visitas: <span id="contador-visitas">...</span>
-  </p>
+  <section id="infocards">
+    <details>
+      <summary><h2>🃏 InfoCards</h2></summary>
+      <input type="text" id="buscador" placeholder="🔍 Buscar imagen por nombre...">
+      <div class="swiper">
+        <div class="swiper-wrapper" id="galeria"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </details>
+  </section>
 
-  <section id="infocards">...</section>
-  <section id="video">...</section>
-  <section id="progresos">...</section>
+  <section id="video">
+    <details>
+      <summary><h2>🎬 Video Oficial del gremio</h2></summary>
+      <div style="text-align: center; margin: 20px;">
+        <a href="https://www.captiongenerator.com/v/2310496/hitler-se-entera-que-pablodc-es-una-mentira" target="_blank" style="display: inline-block; background-color: #d9534f; color: white; padding: 12px 20px; border-radius: 8px; font-size: 16px; text-decoration: none; box-shadow: 0 0 10px black;">
+          Ver video en nueva pestaña
+        </a>
+      </div>
+    </details>
+  </section>
+
+  <section id="progresos">
+    <details>
+      <summary><h2>📈 Progresos</h2></summary>
+      <div class="iframe-wrapper">
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubchart?oid=758906036&amp;format=interactive"></iframe>
+      </div>
+    </details>
+  </section>
 
   <section id="rank">
     <details>
       <summary><h2>📊 Rank y crecimiento</h2></summary>
       <div class="iframe-wrapper">
-        <iframe
-          src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRME1eztYYZ_MaKkEbRE5PZueQvFJ0IUlJ-4tPCz1FGzFVGV4Nax93NLG_rCMYiL0EcJqRee5wCgLtq/pubhtml?gid=0&single=true&range=A1%3AX120&widget=false&chrome=false&headers=false"
-          width="100%" height="600" style="border:0;"
-          loading="lazy">
-        </iframe>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubhtml?gid=0&single=true&range=A1%3AX120&widget=false&chrome=false&headers=false" width="100%" height="600" style="border:0;" loading="lazy"></iframe>
       </div>
     </details>
   </section>
@@ -305,8 +312,69 @@
 
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
-    // código JS igual que antes
+    const API_URL = "https://script.google.com/macros/s/AKfycbyq0mHMv432ksgyO9s63ktnuKZxbMlvfmulK7IH89wv-06DYgN8O5Wy_mT8tB8aYlBicg/exec";
+    let todasLasImagenes = [];
+    let swiper;
+
+    function crearCarrusel(imagenes) {
+      const galeria = document.getElementById("galeria");
+      galeria.innerHTML = "";
+      imagenes.forEach((img) => {
+        const slide = document.createElement("div");
+        slide.className = "swiper-slide";
+        slide.innerHTML = `
+          <img src="${img.url}" alt="${img.name}">
+          <div class="nombre-imagen">${img.name}</div>`;
+        galeria.appendChild(slide);
+      });
+      if (swiper) swiper.destroy(true, true);
+      swiper = new Swiper(".swiper", {
+        loop: true,
+        pagination: { el: ".swiper-pagination", clickable: true },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    }
+
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        todasLasImagenes = data;
+        crearCarrusel(todasLasImagenes);
+      });
+
+    document.getElementById("buscador").addEventListener("input", function () {
+      const texto = this.value.toLowerCase();
+      const filtradas = todasLasImagenes.filter(img =>
+        img.name.toLowerCase().includes(texto)
+      );
+      crearCarrusel(filtradas);
+    });
+
+    function toggleMenu() {
+      document.getElementById("nav-links").classList.toggle("active");
+    }
+
+    document.addEventListener("click", function (e) {
+      if (e.target.tagName === "IMG" && e.target.closest(".swiper-slide")) {
+        const modal = document.getElementById("modal");
+        const modalImg = document.getElementById("modal-img");
+        modalImg.src = e.target.src;
+        modal.style.display = "flex";
+      }
+    });
+
+    document.getElementById("modal").addEventListener("click", function () {
+      this.style.display = "none";
+    });
+
+    fetch('https://api.countapi.xyz/hit/galeria-dorada.ld/visitas')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('contador-visitas').innerText = data.value;
+      });
   </script>
 </body>
 </html>
-
