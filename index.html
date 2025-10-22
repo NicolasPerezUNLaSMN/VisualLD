@@ -27,6 +27,7 @@
       padding-top: 60px;
     }
 
+    /* === NAVBAR === */
     .navbar {
       display: flex;
       justify-content: space-between;
@@ -56,10 +57,55 @@
       padding: 0;
     }
 
+    .navbar li {
+      position: relative;
+    }
+
     .navbar li a {
       color: #fff;
       text-decoration: none;
       font-weight: bold;
+      padding: 8px;
+      display: block;
+      transition: color 0.2s;
+    }
+
+    .navbar li a:hover {
+      color: var(--gold);
+    }
+
+    /* === SUBMENÚ === */
+    .navbar li ul {
+      display: none;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.95);
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+      padding: 10px 0;
+      top: 100%;
+      left: 0;
+      min-width: 230px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 999;
+    }
+
+    .navbar li:hover ul {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .navbar li ul li a {
+      padding: 10px 15px;
+      text-align: left;
+      font-weight: normal;
+    }
+
+    .navbar li ul li a:hover {
+      background: rgba(255, 215, 0, 0.15);
+      color: var(--gold);
     }
 
     .menu-toggle {
@@ -90,6 +136,20 @@
 
       .navbar ul.active {
         display: flex;
+      }
+
+      .navbar li ul {
+        position: static;
+        border: none;
+        background: transparent;
+        opacity: 1;
+        transform: none;
+        transition: none;
+        margin-top: 5px;
+      }
+
+      .navbar li ul li a {
+        padding: 10px;
       }
 
       .menu-toggle {
@@ -260,10 +320,33 @@
   </style>
 </head>
 <body>
-  <nav class="navbar"> ... </nav>
+
+  <!-- ✅ NUEVA NAVBAR CON SUBMENÚ ANIMADO -->
+  <nav class="navbar">
+    <div class="logo">🌟 Galería Dorada</div>
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <ul id="nav-links">
+      <li><a href="#infocards">InfoCards</a></li>
+      <li><a href="#video">Video</a></li>
+      <li><a href="#progresos">Progresos</a></li>
+      <li><a href="#rank">Rank</a></li>
+      <li>
+        <a href="#">📘 Recursos</a>
+        <ul>
+          <li><a href="https://drive.google.com/drive/folders/1-Ns8SU3w71NcauBbmVh9GRBGFXhB53-x?usp=sharing" target="_blank">Guía Personajes</a></li>
+          <li><a href="https://drive.google.com/drive/folders/1FT_yutZTSg92tw3qjwlHKZmCc19Xe9-Q?usp=sharing" target="_blank">Tips Pesca</a></li>
+          <li><a href="https://drive.google.com/drive/folders/1nK-r078bc35f6NpuHZklip2S9kmAAZ8X?usp=sharing" target="_blank">Equipos Bosses</a></li>
+          <li><a href="https://drive.google.com/drive/folders/1uLii6KoMByJX8nG9c3TNusTOTZdGCqTb?usp=sharing" target="_blank">Equipos más usados</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+
   <h1>✨ Galería Dorada - LD ✨</h1>
 
-
+  <!-- === SECCIONES ORIGINALES === -->
   <section id="infocards">
     <details>
       <summary><h2>🃏 InfoCards</h2></summary>
@@ -294,13 +377,10 @@
       <div class="iframe-wrapper">
         <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubchart?oid=758906036&amp;format=interactive"></iframe>
       </div>
-
-     
     </details>
 
-     <details>
-      <summary><h2>📈 Progresos - Poder </h2></summary>
-
+    <details>
+      <summary><h2>📈 Progresos - Poder</h2></summary>
       <div class="iframe-wrapper">
         <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubchart?oid=902073531&format=interactive"></iframe>
       </div>
@@ -311,7 +391,7 @@
     <details>
       <summary><h2>📊 Rank y crecimiento</h2></summary>
       <div class="iframe-wrapper">
-        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubhtml?gid=0&single=true&range=A1%3AX120&widget=false&chrome=false&headers=false" width="100%" height="600" style="border:0;" loading="lazy"></iframe>
+        <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vSdndHKOrGQSDdarbe6qW-Ea_LXDvy3CvWnn6EpyX-SM1n2F9wpN77lXfb_SrRz7gkAcBXWCC1U9QrU/pubhtml?gid=0&single=true&range=A1%3AX120&widget=false&chrome=false&headers=false" loading="lazy"></iframe>
       </div>
     </details>
   </section>
@@ -341,10 +421,7 @@
       swiper = new Swiper(".swiper", {
         loop: true,
         pagination: { el: ".swiper-pagination", clickable: true },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
+        navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
       });
     }
 
@@ -383,11 +460,15 @@
     fetch('https://api.countapi.xyz/hit/galeria-dorada.ld/visitas')
       .then(res => res.json())
       .then(data => {
-        document.getElementById('contador-visitas').innerText = data.value;
+        const span = document.createElement('div');
+        span.id = "contador-visitas";
+        span.innerText = "👁️ Visitas: " + data.value;
+        document.body.appendChild(span);
       });
   </script>
 </body>
 </html>
+
 
 
 
